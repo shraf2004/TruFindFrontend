@@ -1,0 +1,110 @@
+
+body{
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url('Truman.jpg') no-repeat center center / cover;
+    flex-direction: column;
+
+}
+
+.wrapper{
+    width: 420px;
+    background: #80008068;
+    color: white;
+    border-radius:50px;
+}
+
+.wrapper h2{
+text-align: center;
+}
+
+.wrapper .input-box{
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.input-box input{
+    width: 200px;
+    height:25px;
+}
+
+.wrapper .RF{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.wrapper .button{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.wrapper .reg{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    
+}
+
+.wrapper .reg a{
+    color:aliceblue;
+    
+}
+
+.Lost{
+    color: white;
+    text-align: center;
+    margin-bottom: 50px;
+    text-shadow: 1px 1px 10px black;
+
+}
+
+.form{
+    background-color: rgba(255, 255, 255, 0.744);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+}
+
+.form .box{
+    margin: 10px;
+
+}
+
+.form .but{
+    margin: 20px;
+    width: 80px;
+    
+}
+
+.code{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.code input{
+    margin: 20px;
+
+}
+
+.code .note{
+    color: aliceblue;
+    text-shadow: 1px 1px 5cap black;
+    margin: 0px;
+}
+
+.code .link{
+    color: aliceblue;
+    text-shadow: 1px 1px 5cap black;
+}
+

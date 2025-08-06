@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="home.css">
+    <title>Home</title>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="box">
+            <form id="postForm">
+                <div class="post">
+                    <input type="text" id="postText" placeholder="Lost or found something?" />
+                </div>
+
+                <label for="fileInput" class="upload-label">
+                    <i class='bx bx-image-portrait'></i> Upload an image
+                </label>
+                <input type="file" id="fileInput" style="display: none;">
+                <span id="fileName"></span>
+
+                <button class="sub">Submit</button>
+            </form>
+        </div>
+
+        <div id="postContainer">
+            <!-- All posts will show here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
