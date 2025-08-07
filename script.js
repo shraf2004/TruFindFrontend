@@ -1,6 +1,6 @@
 // ✅✅✅ TruFind script.js — Frontend
 
-if (window.location.pathname.includes("home.html")) {
+if (window.location.pathname.includes("Home.html")) {
     const currentUser = localStorage.getItem("userName");
     if (!currentUser) window.location.href = "index.html";
 }
@@ -60,7 +60,7 @@ async function login() {
     if (data.success) {
         localStorage.setItem("userName", data.name);
         localStorage.setItem("userId", data.id);
-        window.location.href = "home.html";
+        window.location.href = "Home.html";
     } else {
         alert("Invalid credentials");
     }
@@ -126,7 +126,7 @@ async function getAllPosts() {
     }
 }
 
-if (window.location.pathname.includes("home.html")) {
+if (window.location.pathname.includes("Home.html")) {
     window.addEventListener("DOMContentLoaded", getAllPosts);
 }
 
