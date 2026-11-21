@@ -1,30 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <title>Registration</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create an account | TruFind</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
-<body>
-    <div class="form">
-        <h1>Register Quickly</h1>
-
-        <div class="box">
-            <input type="text" id="name" placeholder="Name">
-        </div>
-
-        <div class="box">
-            <input type="password" id="password" placeholder="Password">
-        </div>
-
-        <div class="box">
-            <input type="text" id="email" placeholder="Truman email">
-        </div>
-
-        <button class="but" onclick="validForm()">Send code</button>
-
-    </div>
-
-    <script src="script.js"></script>
-
+<body class="auth-page">
+    <main class="auth-layout registration">
+        <aside class="auth-photo">
+            <div class="auth-photo-copy">
+                <p class="eyebrow">Truman State University</p>
+                <p class="photo-heading">Your campus.<br> Your noticeboard.</p>
+                <p>Help lost items find their way home across Truman.</p>
+            </div>
+        </aside>
+        <section class="auth-panel" aria-labelledby="page-title">
+            <div class="auth-content">
+                <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>TruFind</a>
+                <h1 id="page-title">Create an account</h1>
+                <p class="intro">Use your @truman.edu email. We’ll send you a six-digit verification code.</p>
+                <p id="authFeedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+                <form id="registrationForm" class="auth-form" aria-describedby="authFeedback">
+                    <label for="name">Full name</label>
+                    <input id="name" type="text" autocomplete="name" required>
+                    <label for="email">Truman email</label>
+                    <input id="email" type="email" placeholder="you@truman.edu" autocomplete="email" required>
+                    <label for="password">Password</label>
+                    <div class="password-field">
+                        <input id="password" type="password" autocomplete="new-password" required>
+                        <button type="button" class="password-toggle" aria-controls="password">Show<span class="sr-only"> password</span></button>
+                    </div>
+                    <button class="button primary full" type="submit">Send verification code</button>
+                </form>
+                <p class="auth-footer">Already registered? <a href="index.html">Sign in</a>.</p>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

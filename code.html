@@ -1,23 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <title>Code</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Check your email | TruFind</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
-<body>
-    <div class="code">
-        <p class="note">
-  This code will go to your spam folder at 
-  <a class="link" href="https://barracuda.truman.edu" target="_blank">barracuda.truman.edu</a>
-</p>
-<p class="note">Login there to get the code.</p>
-
-    <input type="text" id="codeInput" placeholder="Enter 6 digit code">
-        <button class="sub" onclick="verifyCode()">Submit</button>
-   
-    </div>
-
-    <script src="script.js"></script>
-
+<body class="auth-page">
+    <main class="auth-layout ">
+        <aside class="auth-photo">
+            <div class="auth-photo-copy">
+                <p class="eyebrow">Truman State University</p>
+                <p class="photo-heading">See you on<br> the board.</p>
+                <p>Verify your Truman email to join the campus noticeboard.</p>
+            </div>
+        </aside>
+        <section class="auth-panel" aria-labelledby="page-title">
+            <div class="auth-content">
+                <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>TruFind</a>
+                <h1 id="page-title">Check your email</h1>
+                <p class="intro">Enter the six-digit code sent to your Truman email.</p>
+                <p id="authFeedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+                <form id="verificationForm" class="auth-form" aria-describedby="authFeedback">
+                    <label for="codeInput">Verification code</label>
+                    <input id="codeInput" class="code-input" type="text" inputmode="numeric" autocomplete="one-time-code"
+                        maxlength="6" pattern="[0-9]{6}" aria-describedby="codeHelp" required>
+                    <p id="codeHelp" class="help">Can’t find it? Check your spam folder or <a href="https://barracuda.truman.edu" target="_blank" rel="noopener noreferrer">Truman’s email quarantine</a>.</p>
+                    <button class="button primary full" type="submit">Verify email</button>
+                </form>
+                <p class="auth-footer">Need a new code? <a href="RegForm.html">Return to registration</a>.</p>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

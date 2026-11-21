@@ -1,35 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Campus noticeboard | TruFind</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
-    <title>Home</title>
-    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="box">
-            <form id="postForm">
-                <div class="post">
-                    <input type="text" id="postText" placeholder="Lost or found something?" />
-                </div>
-
-                <label for="fileInput" class="upload-label">
-                    <i class='bx bx-image-portrait'></i> Upload an image
-                </label>
-                <input type="file" id="fileInput" style="display: none;">
-                <span id="fileName"></span>
-
-                <button class="sub">Submit</button>
-                <button class="sub" type="button" onclick="logout()">Log out</button>
-            </form>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <nav class="shell nav" aria-label="Main navigation">
+            <a class="brand" href="Home.html"><span class="brand-mark" aria-hidden="true"></span>TruFind</a>
+            <button id="logoutButton" type="button" class="button secondary">Log out</button>
+        </nav>
+    </header>
+    <main id="main" class="shell board" tabindex="-1">
+        <section class="hero" aria-labelledby="home-title">
+            <div class="hero-copy">
+                <p class="eyebrow">Truman State University</p>
+                <h1 id="home-title">Campus<br> lost &amp; found</h1>
+                <p>Lost something on campus or found something that isn’t yours? Post a note and help it find its way back.</p>
+            </div>
+        </section>
+        <div class="board-layout">
+            <section class="composer" aria-labelledby="composer-title">
+                <h2 id="composer-title">Create a post</h2>
+                <p class="help">Include what the item looks like and where you lost or found it.</p>
+                <form id="postForm" aria-describedby="postFeedback" novalidate>
+                    <label for="postText">Description</label>
+                    <textarea id="postText" rows="4" placeholder="Found a water bottle near the library…" required></textarea>
+                    <div class="upload">
+                        <input class="sr-only file-input" id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="imageHelp">
+                        <label class="button secondary picker" for="fileInput"><span aria-hidden="true">+</span> Add a photo</label>
+                        <p id="imageHelp" class="help">Optional · JPG, PNG or WebP · up to 5 MiB</p>
+                    </div>
+                    <div id="imagePreview" class="image-preview" hidden>
+                        <img id="previewPhoto" alt="Selected attachment preview">
+                        <div>
+                            <p id="fileName"></p>
+                            <button id="removeImage" class="text-button" type="button">Remove photo</button>
+                        </div>
+                    </div>
+                    <p id="postFeedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+                    <button type="submit" class="button primary full">Publish post</button>
+                </form>
+            </section>
+            <section class="feed" aria-labelledby="feed-title">
+                <header class="feed-header">
+                    <h2 id="feed-title">Recent posts</h2>
+                    <p class="help">See what’s been lost or found around campus.</p>
+                </header>
+                <p id="feedFeedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+                <div id="feedState" class="feed-state" role="status">Loading posts…</div>
+                <button id="retryFeed" type="button" class="button secondary" hidden>Retry loading posts</button>
+                <div id="postContainer" class="post-grid" aria-busy="true"></div>
+            </section>
         </div>
-
-        <div id="postContainer">
-            <!-- All posts will show here -->
+    </main>
+    <footer class="site-footer"><div class="shell">TruFind <span>Campus lost &amp; found</span></div></footer>
+    <dialog id="photoDialog" class="photo-dialog" aria-labelledby="photo-title">
+        <div class="dialog-header">
+            <h2 id="photo-title">Post photo</h2>
+            <form method="dialog"><button class="button secondary" autofocus>Close</button></form>
         </div>
-    </div>
-
-    <script src="script.js"></script>
+        <img id="fullPhoto" alt="Enlarged post photo">
+    </dialog>
+    <dialog id="deleteDialog" aria-labelledby="delete-title" aria-describedby="deleteHelp">
+        <form method="dialog" class="delete-dialog-form">
+            <h2 id="delete-title">Delete this post?</h2>
+            <p id="deleteHelp">This removes the post from the campus noticeboard.</p>
+            <div class="dialog-actions">
+                <button class="button secondary" value="cancel" autofocus>Cancel</button>
+                <button class="button danger" value="delete">Delete post</button>
+            </div>
+        </form>
+    </dialog>
 </body>
-
 </html>
