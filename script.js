@@ -116,7 +116,7 @@ async function getAllPosts() {
         container.innerHTML = "";
         data.posts.forEach(post => {
             const div = document.createElement("div");
-            let html = `<h3>post.name</h3><p>{post.description}</p><p><small>${new Date(post.created_at).toLocaleString()}</small></p>`;
+            let html = `<h3>${post.name}</h3><p>${post.description}</p><p><small>${new Date(post.created_at).toLocaleString()}</small></p>`;
             if (post.image_url && post.image_url !== "No image") html += `<img src="${post.image_url}" width="200">`;
             if (post.user_id.toString() === currentUser) html += `<button onclick="deletePost(${post.id})">Delete</button>`;
             html += `<hr>`;
@@ -136,7 +136,7 @@ async function deletePost(id) {
     if (!confirmDelete) return;
 
     const userId = localStorage.getItem("userId");
-    const res = await fetch(`https://100.55.59.69/delete-posts/id?userId={userId}`, { method: "DELETE" });
+    const res = await fetch(`https://100.55.59.69/delete-posts/${id}?userId=${userId}`, { method: "DELETE" });
     const data = await res.json();
 
     if (data.success) {
