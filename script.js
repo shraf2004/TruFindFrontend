@@ -1,8 +1,40 @@
 // ✅✅✅ TruFind script.js — Frontend
 
-if (window.location.pathname.includes("Home.html")) {
-    const currentUser = localStorage.getItem("userName");
-    if (!currentUser) window.location.href = "index.html";
+function logout() {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("expiresAt");
+    sessionStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userId");
+    window.location.replace("index.html");
+}
+
+function endSession() {
+    alert("Your session has expired. Please log in again.");
+    logout();
+}
+
+function sessionHasExpired() {
+    const expiresAt = Number(sessionStorage.getItem("expiresAt"));
+    return !Number.isFinite(expiresAt) || expiresAt <= Date.now();
+}
+
+async function authenticatedRequest(url, options) {
+    const token = sessionStorage.getItem("token");
+    if (!token || sessionHasExpired()) {
+        endSession();
+        return;
+    }
+
+    const response = await fetch(url, {
+        ...options,
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    if (response.status === 401) {
+        endSession();
+        return;
+    }
+    return response.json();
 }
 
 async function validForm() {
@@ -58,8 +90,9 @@ async function login() {
 
     const data = await response.json();
     if (data.success) {
-        localStorage.setItem("userName", data.name);
-        localStorage.setItem("userId", data.id);
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("expiresAt", data.expiresAt);
+        sessionStorage.setItem("userId", data.id);
         window.location.href = "Home.html";
     } else {
         alert("Invalid credentials");
@@ -80,7 +113,6 @@ if (postForm) {
     postForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append("user_id", localStorage.getItem("userId"));
         formData.append("title", "Post");
         formData.append("description", postText.value);
 
@@ -91,12 +123,12 @@ if (postForm) {
             formData.append("image", file);
         }
 
-        const res = await fetch("https://100.55.59.69/posts", {
+        const result = await authenticatedRequest("https://100.55.59.69/posts", {
             method: "POST",
             body: formData
         });
 
-        const result = await res.json();
+        if (!result) return;
         if (result.success) {
             alert("Post saved");
             window.location.reload();
@@ -110,24 +142,56 @@ async function getAllPosts() {
     const response = await fetch("https://100.55.59.69/all-posts");
     const data = await response.json();
     const container = document.getElementById("postContainer");
-    const currentUser = localStorage.getItem("userId");
+    const currentUser = sessionStorage.getItem("userId");
 
     if (data.success) {
-        container.innerHTML = "";
+        container.replaceChildren();
         data.posts.forEach(post => {
             const div = document.createElement("div");
-            let html = `<h3>${post.name}</h3><p>${post.description}</p><p><small>${new Date(post.created_at).toLocaleString()}</small></p>`;
-            if (post.image_url && post.image_url !== "No image") html += `<img src="${post.image_url}" width="200">`;
-            if (post.user_id.toString() === currentUser) html += `<button onclick="deletePost(${post.id})">Delete</button>`;
-            html += `<hr>`;
-            div.innerHTML = html;
+            const name = document.createElement("h3");
+            name.textContent = post.name;
+            const description = document.createElement("p");
+            description.textContent = post.description;
+            const date = document.createElement("p");
+            const timestamp = document.createElement("small");
+            timestamp.textContent = new Date(post.created_at).toLocaleString();
+            date.appendChild(timestamp);
+            div.append(name, description, date);
+
+            if (/^https?:\/\//i.test(post.image_url)) {
+                const image = document.createElement("img");
+                image.src = post.image_url;
+                image.width = 200;
+                div.appendChild(image);
+            }
+
+            if (String(post.user_id) === currentUser) {
+                const button = document.createElement("button");
+                button.textContent = "Delete";
+                button.addEventListener("click", () => deletePost(post.id));
+                div.appendChild(button);
+            }
+            div.appendChild(document.createElement("hr"));
             container.appendChild(div);
         });
     }
 }
 
 if (window.location.pathname.includes("Home.html")) {
-    window.addEventListener("DOMContentLoaded", getAllPosts);
+    function checkSession() {
+        if (!sessionStorage.getItem("token")) {
+            logout();
+        } else if (sessionHasExpired()) {
+            endSession();
+        } else {
+            return true;
+        }
+    }
+
+    if (checkSession()) window.addEventListener("DOMContentLoaded", getAllPosts);
+    window.addEventListener("pageshow", event => {
+        if (event.persisted) checkSession();
+    });
 }
 
 
@@ -135,9 +199,8 @@ async function deletePost(id) {
     const confirmDelete = confirm("Are you sure?");
     if (!confirmDelete) return;
 
-    const userId = localStorage.getItem("userId");
-    const res = await fetch(`https://100.55.59.69/delete-posts/${id}?userId=${userId}`, { method: "DELETE" });
-    const data = await res.json();
+    const data = await authenticatedRequest(`https://100.55.59.69/delete-posts/${encodeURIComponent(id)}`, { method: "DELETE" });
+    if (!data) return;
 
     if (data.success) {
         alert("Deleted");
