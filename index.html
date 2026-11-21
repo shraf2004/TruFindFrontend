@@ -1,36 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="style.css">
-<link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TruFind</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome back | TruFind</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
-<body>
-
-    <h1 class="Lost">Lost something inside Truman? Here you go!!!</h1>
-
-    <div class="wrapper">
-        <form action="">
-            <h2>Login</h2>
-            <div class="input-box">
-                <input type="text" id="loginEmail" placeholder="Truman email">
-                <i class='bxr  bxs-user bx-flip-horizontal'  ></i> 
+<body class="auth-page">
+    <main class="auth-layout ">
+        <aside class="auth-photo">
+            <div class="auth-photo-copy">
+                <p class="eyebrow">Truman State University</p>
+                <p class="photo-heading">Find your way<br> back to it.</p>
+                <p>A campus lost-and-found for the Truman community.</p>
             </div>
-            <div class="input-box">
-                <input type="password" id="loginPassword" placeholder="Password">
-                <i class='bxr  bxs-lock bx-flip-horizontal'  ></i> 
+        </aside>
+        <section class="auth-panel" aria-labelledby="page-title">
+            <div class="auth-content">
+                <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>TruFind</a>
+                <h1 id="page-title">Welcome back</h1>
+                <p class="intro">Sign in with your Truman email to open the campus noticeboard.</p>
+                <p id="authFeedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+                <form id="loginForm" class="auth-form" aria-describedby="authFeedback">
+                    <label for="loginEmail">Truman email</label>
+                    <input id="loginEmail" type="email" placeholder="you@truman.edu" autocomplete="username" required>
+                    <label for="loginPassword">Password</label>
+                    <div class="password-field">
+                        <input id="loginPassword" type="password" autocomplete="current-password" required>
+                        <button type="button" class="password-toggle" aria-controls="loginPassword">Show<span class="sr-only"> password</span></button>
+                    </div>
+                    <button class="button primary full" type="submit">Sign in</button>
+                </form>
+                <p class="auth-footer">New to TruFind? <a href="RegForm.html">Create an account</a>.</p>
             </div>
-            <div class="button">
-                <button type="button" onclick="login()">Login</button>
-            </div>
-            <div class="reg">
-                <a href="RegForm.html">Don't have an account? Register.</a>
-            </div>
-        </form>
-    </div>
-    </body>
-    <script src="script.js"></script>
+        </section>
+    </main>
+</body>
 </html>
